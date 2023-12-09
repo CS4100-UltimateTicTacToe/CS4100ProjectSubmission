@@ -79,6 +79,8 @@ def create_ultimate_board_layout(boards):
             result_layout.append(html.Div(row_layout, style={'display': 'flex', 'justifyContent': 'center'}))
         return html.Div(result_layout, style={'textAlign': 'center'})
 
+
+# uncomment this if you want to do the monte carlo vs monte carlo, this must using muti-processing because it is too slow if not
 def game_simulation(game):
     player1 = ultTTTplayer("player 1", "O", monte_carlo=True)
     player2 = ultTTTplayer("player 2", "X", monte_carlo=True)
@@ -107,6 +109,7 @@ def eval(num_games):
 if __name__ == "__main__":
     eval(100)
 
+# this is the slower version (not use muti processing)
 
 # def eval(num_games):
 #     """
