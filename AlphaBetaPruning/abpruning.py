@@ -13,7 +13,7 @@ def ab_step(node, letter, possibleMoves, subGrid, depth):
 
     #Then, we must simulate to see what move has the best heuristic
     ## TO DIRECTLY APPLY HEURISTICS -- COMMENT OUT LINE 16
-    list, best_heuristic = abpruning(node, depth, float('-inf'), float('inf'), isO, depth, [])
+    list, best_heuristic = abpruning(node, 2, float('-inf'), float('inf'), isO, 2, [])
     best_child = 0
     heuristics = []
     children = []
@@ -51,13 +51,15 @@ def abpruning(node, depth, alpha, beta, maximizingPlayer, original_depth, keep_c
             if value > beta:
                 break
             alpha = max(value, alpha)
-        if depth == original_depth - 1:
+        if depth == original_depth - 1 or original_depth == 1:
             keep_children.append((node, value))
         # node.heuristic = value
         if depth == original_depth:
             return keep_children, value
         return value
     else:
+        if depth == 0: 
+            return node.heuristic
         # the heuristic value starts off as negative infinity
         value = float('inf')
 
@@ -71,7 +73,7 @@ def abpruning(node, depth, alpha, beta, maximizingPlayer, original_depth, keep_c
             if value < alpha:
                 break
             beta = min(value, alpha)
-        if depth == original_depth - 1:
+        if depth == original_depth - 1 or original_depth == 1:
             keep_children.append((node, value))
         # node.heuristic = value
         if depth == original_depth:
