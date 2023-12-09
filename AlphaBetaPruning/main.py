@@ -11,8 +11,8 @@ if __name__ == "__main__":
     num_game = 100
 
     for i in tqdm(range(num_game), desc="Processing"):
-        player1 = PruningPlayer("Player1", "O", 2)
-        player2 = RandomPlayer("Player2", "X")
+        player1 = PruningPlayer("Player1", "O")
+        player2 = RandomPlayer("Player2", "X", 2)
         ttt = TicTacToe(player1, player2) 
         ttt.playGame()
         winner = ttt.checkTotalWin()
