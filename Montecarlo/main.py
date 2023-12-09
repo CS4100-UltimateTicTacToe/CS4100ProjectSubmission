@@ -2,7 +2,6 @@ from tictactoe import TicTacToe
 from TTTPlayer import TTTPlayer
 from ultTTT import ultTTT
 from ultTTTplayer import ultTTTplayer
-from visual import Visual
 
 import dash
 from dash import html, dcc
@@ -10,7 +9,7 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import numpy as np
 
-
+# begin here, just set up the web element, if you don't care, scroll down to where I test monte carlo
 def check_rows(board):
     for row in board:
         if len(set(row)) == 1:
@@ -77,8 +76,12 @@ def create_ultimate_board_layout(boards):
                 row_layout.append(cell)
             result_layout.append(html.Div(row_layout, style={'display': 'flex', 'justifyContent': 'center'}))
         return html.Div(result_layout, style={'textAlign': 'center'})
-    
+
+
 def eval(num_games):
+    """
+    evaluating the monte carlo win rate, draw rate and lose rate based on input number of games
+    """
     
     p1_win = 0
     p2_win = 0
@@ -111,6 +114,9 @@ def eval(num_games):
 #RUN FOR ULTIMATE
 if __name__ == "__main__":
     eval(100)
+
+    # if you just want to see one round, please comment the eval and uncomment the thing below 
+
 #     player1 = ultTTTplayer("player 1", "O")
 #     player2 = ultTTTplayer("player 2", "X", monte_carlo=True)
 
@@ -122,6 +128,8 @@ if __name__ == "__main__":
 #     results = ultTTT.result_board
 
 #     records = np.array(records)
+
+    # uncommented below if you want to see the visualization
 
 #     app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -166,6 +174,8 @@ if __name__ == "__main__":
 #     app.run_server(debug=True)
 
 
+
+# below is the part for regular tictactoe, if you interested in how monte carlo works on it, comment the "main" function above and uncomment below code
 
 # #RUN FOR REGULAR
 # you will want to see how the algorithm works for regular tictaetoe by using this

@@ -140,6 +140,9 @@ class ultTTT:
         turn_O = None
 
         while True:
+            # you can switch turn_O and turn_X to make monte carlo first or second
+            # just comment the one there and uncomment the other one
+
             #turn_O = self.playerTakeTurn(self.playerO, "O", monte_carlo_on=monte_carlo_on)
             turn_X = self.playerTakeTurn(self.playerX, "X", turn_O, self, monte_carlo_on)
             if not monte_carlo_on:
