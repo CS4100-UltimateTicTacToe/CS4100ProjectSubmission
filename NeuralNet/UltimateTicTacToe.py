@@ -221,7 +221,7 @@ if __name__ == "__main__":
     print(f"CPU Cores Detected: {mp.cpu_count()}")
     boards = generateBoards(1000)
     rotations(boards[9][0], 0, 0)
-"""     bestMoves = []
+    bestMoves = []
     data = []
     subgrids = []
     counter = 0
@@ -243,5 +243,5 @@ if __name__ == "__main__":
     subGridData = np.asarray(subgrids)
     np.save("boards", boardData)
     np.save("moves", moveData)
-    np.save("subgrids", subgrids) """
+    np.save("subgrids", subgrids)
     
