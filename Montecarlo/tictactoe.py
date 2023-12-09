@@ -1,7 +1,6 @@
 import numpy as np
 from TTTPlayer import TTTPlayer
 from typing import Final
-from visual import Visual
 
 class TicTacToe:
 

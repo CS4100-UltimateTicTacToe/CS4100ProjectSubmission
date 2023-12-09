@@ -9,11 +9,12 @@ class ULT_MONTE_CARLO:
         # name is the "O" or "X" the monte carlor player is using, but I havn't use it yet
         self.name = name
         self.root = Node(cur=root_node, children=[], board_state=deepcopy(root_board_state), max_child=len(possible_moves[2]))
-        self.turn = "X"
+        self.turn = name
         self.total_simulation = root_total_simulations
 
     def magic(self, iteration):
         print("start the monte carlo search tree algorithm!")
+        self.get_oppo()
 
         for _ in tqdm(range(iteration)):
 
@@ -37,7 +38,13 @@ class ULT_MONTE_CARLO:
         print("based on the monte carlo tree search algorithm, the best move will be:", best_move.cur, "!")
 
         return best_move.cur
-
+    
+    def get_oppo(self):
+        if self.name == "X":
+            self.oppo = "O"
+        else:
+            self.oppo = "X"
+    
     def getName(self):
         return self.name
 
@@ -124,9 +131,9 @@ class ULT_MONTE_CARLO:
         
         while node is not None:
             node.visit += 1
-            if result == "X":
+            if result == self.name:
                 node.win += 1
-            elif result == "O":
+            elif result == self.oppo:
                 node.lose += 1
             else:
                 node.draw += 1
@@ -144,11 +151,11 @@ class ULT_MONTE_CARLO:
         """
 
         if cur_point == None:
-            self.turn = "X"
-        elif cur_board_state.board[cur_point[0]][cur_point[1]].board[cur_point[2][0]][cur_point[2][1]] == "O":
-            self.turn = "X"
-        elif cur_board_state.board[cur_point[0]][cur_point[1]].board[cur_point[2][0]][cur_point[2][1]] == "X":
-            self.turn = "O"
+            self.turn = self.name
+        elif cur_board_state.board[cur_point[0]][cur_point[1]].board[cur_point[2][0]][cur_point[2][1]] == self.oppo:
+            self.turn = self.name
+        elif cur_board_state.board[cur_point[0]][cur_point[1]].board[cur_point[2][0]][cur_point[2][1]] == self.name:
+            self.turn = self.oppo
         
         cur_board_state.board[child_node[0]][child_node[1]].board[child_node[2][0]][child_node[2][1]] = self.turn
         new_board_state = deepcopy(cur_board_state)

@@ -2,7 +2,6 @@ import numpy as np
 from ultTTTplayer import ultTTTplayer
 from tictactoe import TicTacToe
 from typing import Final
-from visual import Visual
 from copy import deepcopy
 
 class ultTTT:
@@ -157,7 +156,7 @@ class ultTTT:
                 print("It's a draw!")
                 break
             #turn_X = self.playerTakeTurn(self.playerX, "X", turn_O, self, monte_carlo_on)
-            turn_O = self.playerTakeTurn(self.playerO, "O", monte_carlo_on=monte_carlo_on)
+            turn_O = self.playerTakeTurn(self.playerO, "O", turn_X, self, monte_carlo_on)
             if not monte_carlo_on:
                 self.board_record.append(self.prepocess())
             #track if there has been a win on one of the subboards

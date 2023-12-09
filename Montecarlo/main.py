@@ -9,6 +9,8 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 import numpy as np
 
+import multiprocessing
+
 # begin here, just set up the web element, if you don't care, scroll down to where I test monte carlo
 def check_rows(board):
     for row in board:
@@ -77,32 +79,24 @@ def create_ultimate_board_layout(boards):
             result_layout.append(html.Div(row_layout, style={'display': 'flex', 'justifyContent': 'center'}))
         return html.Div(result_layout, style={'textAlign': 'center'})
 
+def game_simulation(game):
+    player1 = ultTTTplayer("player 1", "O", monte_carlo=True)
+    player2 = ultTTTplayer("player 2", "X", monte_carlo=True)
+    UltTTT = ultTTT(player1, player2)
+    UltTTT.playGame()
+
+    winner = UltTTT.getUltWinner()
+    return winner.name if winner else 'draw'
 
 def eval(num_games):
-    """
-    evaluating the monte carlo win rate, draw rate and lose rate based on input number of games
-    """
-    
-    p1_win = 0
-    p2_win = 0
-    draw = 0
+    pool = multiprocessing.Pool()
+    results = pool.map(game_simulation, range(num_games))
+    pool.close()
+    pool.join()
 
-    for game in range(num_games):
-        player1 = ultTTTplayer("player 1", "O")
-        player2 = ultTTTplayer("player 2", "X", monte_carlo=True)
-        UltTTT = ultTTT(player1, player2)
-        UltTTT.playGame()
-
-        winner = UltTTT.getUltWinner()
-
-        if winner == 0:
-            draw += 1
-        elif winner.name == "player 1":
-            p1_win += 1
-        elif winner.name == "player 2":
-            p2_win += 1
-
-        print(f'game: {game}')
+    p1_win = results.count("player 1")
+    p2_win = results.count("player 2")
+    draw = results.count("draw")
 
     p1_win_rate = round(p1_win / num_games * 100, 3)
     p2_win_rate = round(p2_win / num_games * 100, 3)
@@ -110,10 +104,46 @@ def eval(num_games):
     print(f"Player 1 win {p1_win_rate} percent over {num_games} games")
     print(f"Player 2 win {p2_win_rate} percent over {num_games} games")
 
-
-#RUN FOR ULTIMATE
 if __name__ == "__main__":
     eval(100)
+
+
+# def eval(num_games):
+#     """
+#     evaluating the monte carlo win rate, draw rate and lose rate based on input number of games
+#     """
+    
+#     p1_win = 0
+#     p2_win = 0
+#     draw = 0
+
+#     for game in range(num_games):
+#         player1 = ultTTTplayer("player 1", "O")
+#         player2 = ultTTTplayer("player 2", "X", monte_carlo=True)
+#         UltTTT = ultTTT(player1, player2)
+#         UltTTT.playGame()
+
+#         winner = UltTTT.getUltWinner()
+
+#         if winner == 0:
+#             draw += 1
+#         elif winner.name == "player 1":
+#             p1_win += 1
+#         elif winner.name == "player 2":
+#             p2_win += 1
+
+#         print(f'game: {game}')
+
+#     p1_win_rate = round(p1_win / num_games * 100, 3)
+#     p2_win_rate = round(p2_win / num_games * 100, 3)
+
+#     print(f"Player 1 win {p1_win_rate} percent over {num_games} games")
+#     print(f"Player 2 win {p2_win_rate} percent over {num_games} games")
+
+
+# #RUN FOR ULTIMATE
+# if __name__ == "__main__":
+#     eval(100)
 
     # if you just want to see one round, please comment the eval and uncomment the thing below 
 

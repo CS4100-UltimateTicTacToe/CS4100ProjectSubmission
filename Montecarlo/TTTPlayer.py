@@ -19,7 +19,7 @@ class TTTPlayer:
         if (len(possibleMoves) < 1):
             raise ValueError("No possible moves")
         if self.mc == True and not monte_carlo_on:
-            monte_carlo_mode = MONTE_CARLO(name=self.name, root_node=node, root_board_state=board, possible_moves=possibleMoves)
+            monte_carlo_mode = MONTE_CARLO(name=self.letter, root_node=node, root_board_state=board, possible_moves=possibleMoves)
             mc_move = monte_carlo_mode.magic(iteration=1000)
             return mc_move
         else:
